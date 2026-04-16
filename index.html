@@ -79,6 +79,37 @@
     font-size: 18px;
     margin: 0;
   }
+    #hero {
+    min-height: 85vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero-pattern {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    pointer-events: none;
+  }
+
+  .hero-pattern p {
+    margin: 0;
+    font-size: 72px;
+    font-weight: 700;
+    letter-spacing: 10px;
+    color: rgba(0, 0, 0, 0.05);
+    white-space: nowrap;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+  }
 </style>
 </head>
 <body>
@@ -93,10 +124,20 @@
   </header>
 
   <main>
-    <section id="hero">
-      <h1>你好，我是曹晋昊</h1>
-      <p>ERP / MES 实施顾问</p>
-    </section>
+<section id="hero">
+  <div class="hero-pattern" aria-hidden="true">
+    <p>CAO JINHAO CAO JINHAO CAO JINHAO CAO JINHAO</p>
+    <p>CAO JINHAO CAO JINHAO CAO JINHAO CAO JINHAO</p>
+    <p>CAO JINHAO CAO JINHAO CAO JINHAO CAO JINHAO</p>
+    <p>CAO JINHAO CAO JINHAO CAO JINHAO CAO JINHAO</p>
+    <p>CAO JINHAO CAO JINHAO CAO JINHAO CAO JINHAO</p>
+  </div>
+
+  <div class="hero-content">
+    <h1>你好，我是曹晋昊</h1>
+    <p>ERP / MES 实施顾问</p>
+  </div>
+</section>
 
     <section id="about">
       <h2>About</h2>
