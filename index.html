@@ -3,42 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>曹晋昊 | Personal Site</title>
+  <title>Jinhao Hero Preview</title>
   <style>
     :root {
       --bg: #f7f7f3;
-      --text: #0f0f10;
-      --muted: rgba(15, 15, 16, 0.48);
-      --line: rgba(15, 15, 16, 0.08);
-      --dot: rgba(15, 15, 16, 0.12);
+      --text: #111111;
+      --muted: rgba(17,17,17,.42);
+      --line: rgba(17,17,17,.08);
+      --dot: rgba(17,17,17,.11);
+
+      --plane-x: 0px;
+      --plane-y: 0px;
+      --plane-rx: 0deg;
+      --plane-ry: 0deg;
+      --plane-rz: -4deg;
+      --plane-skew: 0deg;
+      --plane-scale: 1;
+      --persp-origin-x: 50%;
+      --persp-origin-y: 50%;
+
+      --mask-x: 160px;
+      --mask-y: 420px;
+      --mask-r: 122px;
+      --overlay-opacity: 0;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     html, body {
       margin: 0;
-      padding: 0;
+      min-height: 100%;
       background: var(--bg);
       color: var(--text);
-      font-family: Inter, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
       overflow-x: hidden;
+      font-family: Inter, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
     }
 
     body {
-      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .page {
-      min-height: 100vh;
-      background: var(--bg);
-    }
+    a { color: inherit; text-decoration: none; }
 
     .hero {
       position: relative;
@@ -55,26 +60,25 @@
       inset: 0;
       pointer-events: none;
       background:
-        linear-gradient(to right, transparent 0, transparent calc(50% - 740px), var(--line) calc(50% - 740px), var(--line) calc(50% - 739px), transparent calc(50% - 739px), transparent calc(50% + 739px), var(--line) calc(50% + 739px), var(--line) calc(50% + 740px), transparent calc(50% + 740px)),
-        linear-gradient(to bottom, transparent 72px, var(--line) 72px, var(--line) 73px, transparent 73px);
+        linear-gradient(to bottom, transparent 74px, var(--line) 74px, var(--line) 75px, transparent 75px),
+        linear-gradient(to right, transparent calc(50% - 740px), var(--line) calc(50% - 740px), var(--line) calc(50% - 739px), transparent calc(50% - 739px), transparent calc(50% + 739px), var(--line) calc(50% + 739px), var(--line) calc(50% + 740px), transparent calc(50% + 740px));
       z-index: 1;
     }
 
     .topbar {
       position: relative;
-      z-index: 5;
-      height: 72px;
+      z-index: 6;
+      height: 74px;
+      padding: 0 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 28px;
-      font-size: 13px;
-      letter-spacing: 0.04em;
     }
 
     .brand {
-      font-weight: 800;
-      letter-spacing: 0.2em;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: .2em;
     }
 
     .nav {
@@ -84,411 +88,402 @@
     }
 
     .nav a {
+      font-size: 13px;
+      color: rgba(17,17,17,.72);
       padding: 8px 12px;
       border-radius: 999px;
-      transition: background 0.22s ease, transform 0.22s ease, opacity 0.22s ease;
-      color: rgba(15, 15, 16, 0.72);
+      transition: transform .22s ease, background .22s ease, color .22s ease;
     }
 
     .nav a:hover {
-      background: rgba(15, 15, 16, 0.06);
       transform: translateY(-1px);
-      color: rgba(15, 15, 16, 0.96);
+      background: rgba(17,17,17,.06);
+      color: rgba(17,17,17,.96);
     }
 
     .lang {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 11px;
-      color: var(--muted);
+      gap: 12px;
+      font-size: 12px;
+      color: rgba(17,17,17,.44);
     }
 
-    .lang-pill {
-      height: 28px;
-      min-width: 28px;
-      padding: 0 10px;
-      border: 1px solid rgba(15, 15, 16, 0.12);
-      border-radius: 999px;
+    .lang span:last-child {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: rgba(15, 15, 16, 0.82);
-      background: rgba(255,255,255,0.45);
+      min-width: 28px;
+      height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(17,17,17,.12);
+      background: rgba(255,255,255,.42);
+      color: rgba(17,17,17,.84);
     }
 
     .stage {
       position: relative;
-      min-height: calc(100vh - 72px);
-      z-index: 3;
-      isolation: isolate;
-    }
-
-    .orbs {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    .orb {
-      position: absolute;
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      background: #000;
-      will-change: transform;
-      transform: translate3d(0, 0, 0);
-      box-shadow: none;
-    }
-
-    .orb--main {
-      width: 240px;
-      height: 240px;
-      left: 0;
-      top: 0;
-    }
-
-    .orb--sub {
-      width: 160px;
-      height: 160px;
-      left: 0;
-      top: 0;
-      opacity: 1;
-    }
-
-    .orb__label {
-      position: absolute;
-      inset: 0;
+      min-height: calc(100vh - 74px);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      color: rgba(255,255,255,0.6);
-      text-transform: uppercase;
+      padding: 28px 24px 82px;
+      isolation: isolate;
+      z-index: 2;
+    }
+
+    .blob-shadow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .blob-shadow::before {
+      content: "";
+      position: absolute;
+      width: calc(var(--mask-r) * 2);
+      height: calc(var(--mask-r) * 2);
+      left: calc(var(--mask-x) - var(--mask-r));
+      top: calc(var(--mask-y) - var(--mask-r));
+      border-radius: 50%;
+      background: #000;
+    }
+
+    .title-world {
+      position: relative;
+      width: min(1080px, 100%);
+      display: flex;
+      justify-content: center;
+      perspective: 2400px;
+      perspective-origin: var(--persp-origin-x) var(--persp-origin-y);
+      z-index: 3;
+      pointer-events: none;
       user-select: none;
     }
 
-    .title-wrap {
-      position: absolute;
-      inset: 0;
+    .title-plane,
+    .overlay-plane {
+      width: 100%;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 32px;
-      z-index: 4;
-      pointer-events: none;
-    }
-
-    .title-track {
-      transform: translate3d(0,0,0) rotate(-4deg);
+      transform-style: preserve-3d;
+      transform: translate3d(var(--plane-x), var(--plane-y), 0)
+                 rotateX(var(--plane-rx))
+                 rotateY(var(--plane-ry))
+                 rotateZ(var(--plane-rz))
+                 skewX(var(--plane-skew))
+                 scale(var(--plane-scale));
       transform-origin: center center;
       will-change: transform;
     }
 
-    .title {
-      margin: 0;
-      font-size: clamp(56px, 10vw, 132px);
-      line-height: 0.92;
-      font-weight: 900;
-      letter-spacing: -0.07em;
-      color: #fff;
-      mix-blend-mode: difference;
-      user-select: none;
+    .title-line,
+    .overlay-line {
+      display: inline-flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: clamp(10px, 1vw, 18px);
       white-space: nowrap;
+      line-height: .9;
+      letter-spacing: -.065em;
+      will-change: transform;
     }
 
-    .title strong {
+    .title-line { color: #111; }
+    .overlay-line { color: #fff; }
+
+    .title-main,
+    .overlay-main {
+      font-size: clamp(62px, 8.8vw, 132px);
       font-weight: 950;
     }
 
-    .title .name {
-      display: inline-block;
+    .title-name,
+    .overlay-name {
+      font-size: clamp(58px, 7.8vw, 112px);
       font-weight: 300;
       font-style: italic;
-      letter-spacing: -0.08em;
-      margin-left: 0.02em;
-      transform-origin: center center;
-      will-change: transform;
+      letter-spacing: -.1em;
     }
 
     .meta {
-      margin-top: 18px;
+      margin-top: 14px;
       text-align: center;
-      font-size: clamp(14px, 1.4vw, 20px);
-      color: rgba(15, 15, 16, 0.46);
-      letter-spacing: -0.02em;
-      user-select: none;
+      font-size: clamp(14px, 1.22vw, 18px);
+      color: rgba(17,17,17,.44);
+      letter-spacing: -.02em;
+      pointer-events: none;
+    }
+
+    .overlay .meta {
+      color: rgba(255,255,255,.54);
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      pointer-events: none;
+      opacity: var(--overlay-opacity);
+      transition: opacity .12s ease;
+      background: #000;
+      -webkit-mask-image: radial-gradient(circle calc(var(--mask-r)) at var(--mask-x) var(--mask-y), #000 99%, transparent 100%);
+      mask-image: radial-gradient(circle calc(var(--mask-r)) at var(--mask-x) var(--mask-y), #000 99%, transparent 100%);
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+    }
+
+    .overlay-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 24px 82px;
     }
 
     .hint {
       position: absolute;
       left: 50%;
-      bottom: 34px;
-      transform: translateX(-50%);
-      font-size: 12px;
-      color: rgba(15, 15, 16, 0.28);
-      letter-spacing: 0.04em;
-      z-index: 4;
-      user-select: none;
-    }
-
-    .corner-note {
-      position: absolute;
-      right: 28px;
       bottom: 28px;
-      z-index: 4;
+      transform: translateX(-50%);
+      z-index: 3;
       font-size: 12px;
-      color: rgba(15, 15, 16, 0.34);
-      letter-spacing: 0.04em;
+      color: rgba(17,17,17,.3);
       user-select: none;
+      white-space: nowrap;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 960px) {
       .topbar {
-        padding: 0 16px;
         height: 64px;
+        padding: 0 16px;
       }
-
       .hero::before {
-        background:
-          linear-gradient(to bottom, transparent 64px, var(--line) 64px, var(--line) 65px, transparent 65px);
+        background: linear-gradient(to bottom, transparent 64px, var(--line) 64px, var(--line) 65px, transparent 65px);
       }
-
-      .nav {
-        gap: 4px;
-      }
-
-      .nav a {
-        padding: 6px 8px;
-        font-size: 12px;
-      }
-
-      .lang {
-        display: none;
-      }
-
-      .orb--main {
-        width: 160px;
-        height: 160px;
-      }
-
-      .orb--sub {
-        width: 110px;
-        height: 110px;
-      }
-
-      .title-wrap {
-        padding: 20px;
-      }
-
-      .title {
-        white-space: normal;
-        text-align: center;
-      }
-
-      .meta {
-        margin-top: 14px;
-      }
+      .nav { gap: 4px; }
+      .nav a { padding: 6px 8px; font-size: 12px; }
+      .lang { display: none; }
+      .stage, .overlay-inner { padding: 16px 16px 72px; }
+      .title-main, .overlay-main { font-size: clamp(48px, 12vw, 92px); }
+      .title-name, .overlay-name { font-size: clamp(44px, 10.2vw, 78px); }
+      .meta { font-size: 14px; }
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <section class="hero" id="hero">
-      <header class="topbar">
-        <div class="brand">JINHAO</div>
-
-        <nav class="nav">
-          <a href="#about">关于</a>
-          <a href="#skills">技能</a>
-          <a href="#projects">项目</a>
-          <a href="#contact">合作</a>
-        </nav>
-
-        <div class="lang">
-          <span>中国 / 江苏</span>
-          <span class="lang-pill">EN</span>
-        </div>
-      </header>
-
-      <div class="stage" id="stage">
-        <div class="orbs">
-          <div class="orb orb--main" id="orbMain">
-            <div class="orb__label">FOCUS</div>
-          </div>
-          <div class="orb orb--sub" id="orbSub">
-            <div class="orb__label">MOVE</div>
-          </div>
-        </div>
-
-        <div class="title-wrap">
-          <div class="title-track" id="titleTrack">
-            <h1 class="title">
-              <strong>HELLO, I'M</strong>
-              <span class="name" id="namePart">Jinhao</span>
-            </h1>
-            <div class="meta">ERP / MES 实施顾问 / 项目交付</div>
-          </div>
-        </div>
-
-        <div class="hint">移动鼠标看标题与黑球联动变化</div>
-        <div class="corner-note">2026 / Personal Site</div>
+  <section class="hero" id="hero">
+    <header class="topbar">
+      <div class="brand">LEO</div>
+      <nav class="nav">
+        <a href="#">关于</a>
+        <a href="#">技能</a>
+        <a href="#">项目</a>
+        <a href="#">合作</a>
+      </nav>
+      <div class="lang">
+        <span>海南 海口</span>
+        <span>EN</span>
       </div>
-    </section>
-  </div>
+    </header>
+
+    <div class="stage" id="stage">
+      <div class="blob-shadow"></div>
+
+      <div class="title-world" id="titleWorld">
+        <div class="title-plane">
+          <div class="title-line">
+            <span class="title-main">HELLO, I'M</span>
+            <span class="title-name">Leo</span>
+          </div>
+          <div class="meta">AI Agent Engineer / 23岁 / 海南海口</div>
+        </div>
+      </div>
+
+      <div class="overlay" aria-hidden="true">
+        <div class="overlay-inner">
+          <div class="title-world">
+            <div class="overlay-plane">
+              <div class="overlay-line">
+                <span class="overlay-main">你好，我是</span>
+                <span class="overlay-name">曹晋昊</span>
+              </div>
+              <div class="meta">业务流程 / 系统实施 / 项目推进</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hint">Move the pointer and watch the title keep tracking it</div>
+    </div>
+  </section>
 
   <script>
-    (function () {
-      const hero = document.getElementById("hero");
-      const stage = document.getElementById("stage");
-      const titleTrack = document.getElementById("titleTrack");
-      const namePart = document.getElementById("namePart");
-      const orbMain = document.getElementById("orbMain");
-      const orbSub = document.getElementById("orbSub");
+    (() => {
+      const stage = document.getElementById('stage');
+      const root = document.documentElement;
+      const titleWorld = document.getElementById('titleWorld');
+      if (!stage || !titleWorld) return;
 
-      if (!hero || !stage || !titleTrack || !namePart || !orbMain || !orbSub) return;
+      let stageRect = stage.getBoundingClientRect();
+      let titleRect = titleWorld.getBoundingClientRect();
+      let active = false;
 
-      let rect = stage.getBoundingClientRect();
-
-      const pointer = {
-        x: rect.width * 0.5,
-        y: rect.height * 0.5
+      const circle = {
+        x: stageRect.width * 0.12,
+        y: stageRect.height * 0.58,
+        tx: stageRect.width * 0.12,
+        ty: stageRect.height * 0.58,
+        r: 122,
+        tr: 122
       };
 
-      const main = {
-        x: rect.width * 0.18,
-        y: rect.height * 0.54,
-        tx: rect.width * 0.18,
-        ty: rect.height * 0.54
+      const plane = {
+        x: 0, y: 0, rx: 0, ry: 0, rz: -4, sk: 0, sc: 1,
+        tx: 0, ty: 0, trx: 0, try: 0, trz: -4, tsk: 0, tsc: 1
       };
 
-      const sub = {
-        x: rect.width * 0.86,
-        y: rect.height * 0.72,
-        tx: rect.width * 0.86,
-        ty: rect.height * 0.72
-      };
-
-      const titleState = {
-        x: 0,
-        y: 0,
-        tx: 0,
-        ty: 0,
-        r: -4,
-        tr: -4
-      };
-
-      function clamp(value, min, max) {
-        return Math.max(min, Math.min(max, value));
+      function clamp(v, min, max) {
+        return Math.max(min, Math.min(max, v));
       }
 
       function lerp(a, b, n) {
         return a + (b - a) * n;
       }
 
-      function refreshRect() {
-        rect = stage.getBoundingClientRect();
+      function signPow(v, p) {
+        const s = Math.sign(v);
+        return s * Math.pow(Math.abs(v), p);
       }
 
-      function setPointer(clientX, clientY) {
-        pointer.x = clientX - rect.left;
-        pointer.y = clientY - rect.top;
-
-        const nx = (pointer.x / rect.width) * 2 - 1;
-        const ny = (pointer.y / rect.height) * 2 - 1;
-
-        main.tx = clamp(pointer.x - orbMain.offsetWidth * 0.5, -40, rect.width - orbMain.offsetWidth + 40);
-        main.ty = clamp(pointer.y - orbMain.offsetHeight * 0.5, -20, rect.height - orbMain.offsetHeight + 20);
-
-        sub.tx = clamp(rect.width - pointer.x - orbSub.offsetWidth * 0.35, -20, rect.width - orbSub.offsetWidth + 20);
-        sub.ty = clamp(rect.height * 0.65 - ny * 110, 40, rect.height - orbSub.offsetHeight - 20);
-
-        titleState.tx = nx * 30;
-        titleState.ty = ny * 12;
-        titleState.tr = -4 + nx * 7 + ny * 1.4;
+      function refreshRects() {
+        stageRect = stage.getBoundingClientRect();
+        titleRect = titleWorld.getBoundingClientRect();
       }
 
-      function resetPointer() {
-        pointer.x = rect.width * 0.5;
-        pointer.y = rect.height * 0.5;
+      function update(clientX, clientY) {
+        const px = clientX - stageRect.left;
+        const py = clientY - stageRect.top;
 
-        main.tx = rect.width * 0.08;
-        main.ty = rect.height * 0.54;
+        circle.tx = clamp(px, 28, stageRect.width - 28);
+        circle.ty = clamp(py, 56, stageRect.height - 28);
+        circle.tr = 118 + Math.min(12, Math.hypot(circle.tx - circle.x, circle.ty - circle.y) * 0.045);
 
-        sub.tx = rect.width * 0.82;
-        sub.ty = rect.height * 0.74;
+        const cx = (titleRect.left - stageRect.left) + titleRect.width * 0.5;
+        const cy = (titleRect.top - stageRect.top) + titleRect.height * 0.5;
+        const dx = px - cx;
+        const dy = py - cy;
 
-        titleState.tx = 0;
-        titleState.ty = 0;
-        titleState.tr = -4;
+        const nx = clamp(dx / (titleRect.width * 0.48), -1, 1);
+        const ny = clamp(dy / (titleRect.height * 0.82), -1, 1);
+        const ex = signPow(nx, 0.78);
+        const ey = signPow(ny, 0.82);
+        const dist = Math.min(1, Math.hypot(ex, ey));
+        const angle = Math.atan2(dy, dx);
+
+        plane.tx = ex * 6;
+        plane.ty = ey * 2;
+        plane.trx = -ey * (20 + dist * 8);
+        plane.try = ex * (34 + dist * 10);
+        plane.trz = -4 + ex * 4 + Math.sin(angle) * 1.4 * dist;
+        plane.tsk = -ex * 6.5 - ey * 1.2;
+        plane.tsc = 1 + dist * 0.012;
+
+        root.style.setProperty('--persp-origin-x', `${50 + ex * 20}%`);
+        root.style.setProperty('--persp-origin-y', `${50 + ey * 18}%`);
       }
 
-      function animate() {
-        main.x = lerp(main.x, main.tx, 0.12);
-        main.y = lerp(main.y, main.ty, 0.12);
+      function reset() {
+        circle.tx = stageRect.width * 0.12;
+        circle.ty = stageRect.height * 0.58;
+        circle.tr = 122;
 
-        sub.x = lerp(sub.x, sub.tx, 0.085);
-        sub.y = lerp(sub.y, sub.ty, 0.085);
+        plane.tx = 0;
+        plane.ty = 0;
+        plane.trx = 0;
+        plane.try = 0;
+        plane.trz = -4;
+        plane.tsk = 0;
+        plane.tsc = 1;
 
-        titleState.x = lerp(titleState.x, titleState.tx, 0.09);
-        titleState.y = lerp(titleState.y, titleState.ty, 0.09);
-        titleState.r = lerp(titleState.r, titleState.tr, 0.08);
-
-        const mainScaleX = 1 + (main.tx - main.x) * 0.0016;
-        const mainScaleY = 1 - (main.tx - main.x) * 0.0007 + Math.abs(main.ty - main.y) * 0.0005;
-
-        const subScaleX = 1 + (sub.tx - sub.x) * 0.001;
-        const subScaleY = 1 - (sub.tx - sub.x) * 0.0005;
-
-        orbMain.style.transform =
-          `translate3d(${main.x}px, ${main.y}px, 0) scale(${mainScaleX.toFixed(3)}, ${mainScaleY.toFixed(3)})`;
-
-        orbSub.style.transform =
-          `translate3d(${sub.x}px, ${sub.y}px, 0) scale(${subScaleX.toFixed(3)}, ${subScaleY.toFixed(3)})`;
-
-        titleTrack.style.transform =
-          `translate3d(${titleState.x}px, ${titleState.y}px, 0) rotate(${titleState.r}deg)`;
-
-        const nameShiftX = (titleState.x * -0.38);
-        const nameShiftY = (titleState.y * 0.18);
-        const nameRotate = titleState.r * -0.72;
-
-        namePart.style.transform =
-          `translate3d(${nameShiftX}px, ${nameShiftY}px, 0) rotate(${nameRotate}deg)`;
-
-        requestAnimationFrame(animate);
+        root.style.setProperty('--persp-origin-x', '50%');
+        root.style.setProperty('--persp-origin-y', '50%');
       }
 
-      stage.addEventListener("mousemove", (e) => {
-        setPointer(e.clientX, e.clientY);
+      function loop() {
+        circle.x = lerp(circle.x, circle.tx, 0.12);
+        circle.y = lerp(circle.y, circle.ty, 0.12);
+        circle.r = lerp(circle.r, circle.tr, 0.12);
+
+        plane.x = lerp(plane.x, plane.tx, 0.12);
+        plane.y = lerp(plane.y, plane.ty, 0.12);
+        plane.rx = lerp(plane.rx, plane.trx, 0.12);
+        plane.ry = lerp(plane.ry, plane.try, 0.12);
+        plane.rz = lerp(plane.rz, plane.trz, 0.12);
+        plane.sk = lerp(plane.sk, plane.tsk, 0.12);
+        plane.sc = lerp(plane.sc, plane.tsc, 0.12);
+
+        root.style.setProperty('--mask-x', `${circle.x.toFixed(1)}px`);
+        root.style.setProperty('--mask-y', `${circle.y.toFixed(1)}px`);
+        root.style.setProperty('--mask-r', `${circle.r.toFixed(1)}px`);
+        root.style.setProperty('--overlay-opacity', active ? '1' : '0');
+
+        root.style.setProperty('--plane-x', `${plane.x.toFixed(1)}px`);
+        root.style.setProperty('--plane-y', `${plane.y.toFixed(1)}px`);
+        root.style.setProperty('--plane-rx', `${plane.rx.toFixed(2)}deg`);
+        root.style.setProperty('--plane-ry', `${plane.ry.toFixed(2)}deg`);
+        root.style.setProperty('--plane-rz', `${plane.rz.toFixed(2)}deg`);
+        root.style.setProperty('--plane-skew', `${plane.sk.toFixed(2)}deg`);
+        root.style.setProperty('--plane-scale', plane.sc.toFixed(4));
+
+        requestAnimationFrame(loop);
+      }
+
+      stage.addEventListener('mouseenter', (e) => {
+        active = true;
+        refreshRects();
+        update(e.clientX, e.clientY);
       });
 
-      stage.addEventListener("mouseleave", () => {
-        resetPointer();
+      stage.addEventListener('mousemove', (e) => {
+        active = true;
+        update(e.clientX, e.clientY);
       });
 
-      stage.addEventListener("touchstart", (e) => {
-        refreshRect();
-        if (e.touches[0]) {
-          setPointer(e.touches[0].clientX, e.touches[0].clientY);
-        }
+      stage.addEventListener('mouseleave', () => {
+        active = false;
+        reset();
+      });
+
+      stage.addEventListener('touchstart', (e) => {
+        refreshRects();
+        active = true;
+        if (e.touches[0]) update(e.touches[0].clientX, e.touches[0].clientY);
       }, { passive: true });
 
-      stage.addEventListener("touchmove", (e) => {
-        if (e.touches[0]) {
-          setPointer(e.touches[0].clientX, e.touches[0].clientY);
-        }
+      stage.addEventListener('touchmove', (e) => {
+        active = true;
+        if (e.touches[0]) update(e.touches[0].clientX, e.touches[0].clientY);
       }, { passive: true });
 
-      window.addEventListener("resize", () => {
-        refreshRect();
-        resetPointer();
+      stage.addEventListener('touchend', () => {
+        active = false;
+        reset();
+      }, { passive: true });
+
+      window.addEventListener('resize', () => {
+        refreshRects();
+        reset();
       });
 
-      resetPointer();
-      animate();
+      refreshRects();
+      reset();
+      loop();
     })();
   </script>
 </body>
