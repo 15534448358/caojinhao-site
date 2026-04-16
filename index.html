@@ -3,14 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jinhao Hero Preview</title>
+  <title>曹晋昊｜个人网站</title>
   <style>
     :root {
       --bg: #f7f7f3;
+      --panel: rgba(255,255,255,.76);
       --text: #111111;
-      --muted: rgba(17,17,17,.42);
+      --muted: rgba(17,17,17,.46);
       --line: rgba(17,17,17,.08);
-      --dot: rgba(17,17,17,.11);
+      --dot: rgba(17,17,17,.10);
+      --shadow: 0 18px 50px rgba(17,17,17,.08);
 
       --plane-x: 0px;
       --plane-y: 0px;
@@ -29,6 +31,7 @@
     }
 
     * { box-sizing: border-box; }
+
     html, body {
       margin: 0;
       min-height: 100%;
@@ -36,43 +39,44 @@
       color: var(--text);
       overflow-x: hidden;
       font-family: Inter, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+      scroll-behavior: smooth;
     }
 
     body {
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
-    }
-
-    a { color: inherit; text-decoration: none; }
-
-    .hero {
-      position: relative;
-      min-height: 100vh;
-      overflow: hidden;
       background:
         radial-gradient(circle at 1px 1px, var(--dot) 1px, transparent 0) 0 0 / 24px 24px,
         var(--bg);
     }
 
-    .hero::before {
-      content: "";
-      position: absolute;
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page-line {
+      position: fixed;
       inset: 0;
       pointer-events: none;
       background:
-        linear-gradient(to bottom, transparent 74px, var(--line) 74px, var(--line) 75px, transparent 75px),
-        linear-gradient(to right, transparent calc(50% - 740px), var(--line) calc(50% - 740px), var(--line) calc(50% - 739px), transparent calc(50% - 739px), transparent calc(50% + 739px), var(--line) calc(50% + 739px), var(--line) calc(50% + 740px), transparent calc(50% + 740px));
-      z-index: 1;
+        linear-gradient(to bottom, transparent 74px, rgba(17,17,17,.05) 74px, rgba(17,17,17,.05) 75px, transparent 75px),
+        linear-gradient(to right, transparent calc(50% - 740px), rgba(17,17,17,.05) calc(50% - 740px), rgba(17,17,17,.05) calc(50% - 739px), transparent calc(50% - 739px), transparent calc(50% + 739px), rgba(17,17,17,.05) calc(50% + 739px), rgba(17,17,17,.05) calc(50% + 740px), transparent calc(50% + 740px));
+      z-index: 0;
     }
 
     .topbar {
-      position: relative;
-      z-index: 6;
+      position: sticky;
+      top: 0;
+      z-index: 20;
       height: 74px;
       padding: 0 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      backdrop-filter: blur(14px);
+      background: rgba(247,247,243,.72);
+      border-bottom: 1px solid rgba(17,17,17,.06);
     }
 
     .brand {
@@ -120,6 +124,21 @@
       border: 1px solid rgba(17,17,17,.12);
       background: rgba(255,255,255,.42);
       color: rgba(17,17,17,.84);
+    }
+
+    .section-shell {
+      position: relative;
+      z-index: 1;
+      width: min(1480px, calc(100vw - 48px));
+      margin: 0 auto;
+      border-left: 1px solid rgba(17,17,17,.06);
+      border-right: 1px solid rgba(17,17,17,.06);
+    }
+
+    .hero {
+      position: relative;
+      min-height: calc(100vh - 74px);
+      overflow: hidden;
     }
 
     .stage {
@@ -258,14 +277,426 @@
       white-space: nowrap;
     }
 
+    .section {
+      position: relative;
+      z-index: 1;
+      padding: 110px 28px;
+      border-top: 1px solid rgba(17,17,17,.06);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 24px;
+      margin-bottom: 40px;
+      align-items: start;
+    }
+
+    .section-title {
+      font-size: clamp(38px, 4.6vw, 64px);
+      line-height: .96;
+      letter-spacing: -.05em;
+      font-weight: 900;
+      margin: 0;
+    }
+
+    .section-title-wrap::after {
+      content: "";
+      display: block;
+      width: 44px;
+      height: 2px;
+      margin-top: 18px;
+      background: #111;
+    }
+
+    .section-desc {
+      max-width: 760px;
+      font-size: 17px;
+      line-height: 1.9;
+      color: var(--muted);
+      padding-top: 8px;
+    }
+
+    .cards-grid {
+      display: grid;
+      gap: 22px;
+    }
+
+    .cards-grid.skills {
+      grid-template-columns: 1.1fr .9fr;
+      align-items: stretch;
+    }
+
+    .cards-grid.projects {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .cards-grid.contact {
+      grid-template-columns: 1.1fr .9fr;
+    }
+
+    .stack {
+      display: grid;
+      gap: 18px;
+    }
+
+    .tilt-card {
+      position: relative;
+      min-height: 250px;
+      perspective: 1400px;
+      cursor: pointer;
+      transform-style: preserve-3d;
+    }
+
+    .tilt-card.tall { min-height: 360px; }
+    .tilt-card.medium { min-height: 300px; }
+    .tilt-card.short { min-height: 280px; }
+    .tilt-card.info-card { min-height: 380px; }
+
+    .card-core {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+      transition: transform .18s ease-out;
+    }
+
+    .tilt-card.is-flipped .card-core {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      inset: 0;
+      border-radius: 26px;
+      background: linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.72));
+      border: 1px solid rgba(17,17,17,.08);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      backface-visibility: hidden;
+      overflow: hidden;
+      transform-style: preserve-3d;
+    }
+
+    .card-face::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          115deg,
+          transparent 18%,
+          rgba(255,255,255,.04) 34%,
+          rgba(255,255,255,.16) 48%,
+          rgba(255,255,255,.06) 58%,
+          transparent 74%
+        );
+      background-size: 180% 180%;
+      background-position: var(--gx, 50%) var(--gy, 50%);
+      opacity: var(--glare, 0);
+      transition: opacity .22s ease, background-position .12s ease;
+      pointer-events: none;
+    }
+
+    .card-face::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 26px;
+      background: linear-gradient(180deg, rgba(255,255,255,.22), transparent 18%, transparent 82%, rgba(17,17,17,.02));
+      pointer-events: none;
+    }
+
+    .card-face.back {
+      transform: rotateY(180deg);
+      background: linear-gradient(180deg, rgba(20,20,20,.96), rgba(10,10,10,.98));
+      color: #fff;
+      border-color: rgba(255,255,255,.06);
+    }
+
+    .card-face.back::before {
+      background:
+        linear-gradient(
+          115deg,
+          transparent 18%,
+          rgba(255,255,255,.02) 34%,
+          rgba(255,255,255,.08) 48%,
+          rgba(255,255,255,.03) 58%,
+          transparent 74%
+        );
+    }
+
+    .card-face.back::after {
+      background: linear-gradient(180deg, rgba(255,255,255,.08), transparent 16%, transparent 84%, rgba(255,255,255,.02));
+    }
+
+    .card-top {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: #111;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .04em;
+    }
+
+    .card-face.back .pill {
+      background: #fff;
+      color: #111;
+    }
+
+    .hint-mini {
+      font-size: 12px;
+      color: rgba(17,17,17,.34);
+    }
+
+    .card-face.back .hint-mini {
+      color: rgba(255,255,255,.4);
+    }
+
+    .card-title {
+      position: relative;
+      z-index: 1;
+      margin: 0 0 8px;
+      font-size: clamp(26px, 2.5vw, 42px);
+      line-height: 1.02;
+      letter-spacing: -.05em;
+      font-weight: 900;
+    }
+
+    .card-desc {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.8;
+      color: rgba(17,17,17,.58);
+      max-width: 92%;
+    }
+
+    .card-face.back .card-desc {
+      color: rgba(255,255,255,.72);
+    }
+
+    .metrics {
+      position: relative;
+      z-index: 1;
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(17,17,17,.08);
+    }
+
+    .card-face.back .metrics {
+      border-top-color: rgba(255,255,255,.08);
+    }
+
+    .metric strong {
+      display: block;
+      font-size: clamp(28px, 2.8vw, 44px);
+      line-height: 1;
+      letter-spacing: -.05em;
+      margin-bottom: 8px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .metric span {
+      font-size: 12px;
+      color: rgba(17,17,17,.44);
+    }
+
+    .card-face.back .metric span {
+      color: rgba(255,255,255,.44);
+    }
+
+    .list {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .list-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(17,17,17,.08);
+      font-size: 14px;
+      color: rgba(17,17,17,.72);
+    }
+
+    .card-face.back .list-item {
+      border-bottom-color: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.74);
+    }
+
+    .list-item span {
+      flex: 0 0 34%;
+    }
+
+    .list-item strong {
+      flex: 1 1 auto;
+      text-align: right;
+      line-height: 1.6;
+      font-size: 13px;
+      font-weight: 700;
+      word-break: break-word;
+    }
+
+    .project-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 22px;
+      flex-wrap: wrap;
+    }
+
+    .project-badge span {
+      display: inline-flex;
+      align-items: center;
+      height: 30px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(17,17,17,.08);
+      font-size: 12px;
+      color: rgba(17,17,17,.58);
+      background: rgba(255,255,255,.5);
+    }
+
+    .card-face.back .project-badge span {
+      border-color: rgba(255,255,255,.1);
+      color: rgba(255,255,255,.72);
+      background: rgba(255,255,255,.04);
+    }
+
+    .contact-list {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 18px;
+      margin-top: 26px;
+    }
+
+    .contact-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(17,17,17,.08);
+    }
+
+    .card-face.back .contact-item {
+      border-bottom-color: rgba(255,255,255,.08);
+    }
+
+    .contact-item small {
+      font-size: 12px;
+      letter-spacing: .06em;
+      color: rgba(17,17,17,.42);
+      text-transform: uppercase;
+    }
+
+    .card-face.back .contact-item small {
+      color: rgba(255,255,255,.4);
+    }
+
+    .contact-item strong {
+      font-size: clamp(22px, 2vw, 32px);
+      line-height: 1.1;
+      letter-spacing: -.04em;
+    }
+
+    .info-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .info-box {
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(17,17,17,.08);
+      background: rgba(255,255,255,.46);
+      min-height: 96px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .info-box small {
+      font-size: 12px;
+      letter-spacing: .06em;
+      color: rgba(17,17,17,.42);
+      text-transform: uppercase;
+    }
+
+    .info-box strong {
+      font-size: clamp(24px, 2vw, 32px);
+      line-height: 1.12;
+      letter-spacing: -.04em;
+    }
+
+    .card-face.back .info-box {
+      border-color: rgba(255,255,255,.08);
+      background: rgba(255,255,255,.04);
+    }
+
+    .card-face.back .info-box small {
+      color: rgba(255,255,255,.42);
+    }
+
+    .section-footnote {
+      margin-top: 20px;
+      font-size: 12px;
+      color: rgba(17,17,17,.32);
+    }
+
+    @media (max-width: 1100px) {
+      .section-head {
+        grid-template-columns: 1fr;
+      }
+
+      .cards-grid.skills,
+      .cards-grid.contact,
+      .cards-grid.projects {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     @media (max-width: 960px) {
       .topbar {
         height: 64px;
         padding: 0 16px;
       }
-      .hero::before {
-        background: linear-gradient(to bottom, transparent 64px, var(--line) 64px, var(--line) 65px, transparent 65px);
-      }
+
+      .page-line { display: none; }
       .nav { gap: 4px; }
       .nav a { padding: 6px 8px; font-size: 12px; }
       .lang { display: none; }
@@ -273,55 +704,329 @@
       .title-main, .overlay-main { font-size: clamp(48px, 12vw, 92px); }
       .title-name, .overlay-name { font-size: clamp(44px, 10.2vw, 78px); }
       .meta { font-size: 14px; }
+      .section-shell {
+        width: calc(100vw - 20px);
+      }
+      .section {
+        padding: 84px 16px;
+      }
     }
   </style>
 </head>
 <body>
-  <section class="hero" id="hero">
-    <header class="topbar">
-      <div class="brand">LEO</div>
-      <nav class="nav">
-        <a href="#">关于</a>
-        <a href="#">技能</a>
-        <a href="#">项目</a>
-        <a href="#">合作</a>
-      </nav>
-      <div class="lang">
-        <span>上海 闵行</span>
-        <span>EN</span>
-      </div>
-    </header>
+  <div class="page-line"></div>
 
-    <div class="stage" id="stage">
-      <div class="blob-shadow"></div>
+  <header class="topbar">
+    <div class="brand">JINHAO</div>
+    <nav class="nav">
+      <a href="#skills">技能</a>
+      <a href="#projects">项目</a>
+      <a href="#contact">合作</a>
+    </nav>
+    <div class="lang">
+      <span>山西 临汾</span>
+      <span>CN</span>
+    </div>
+  </header>
 
-      <div class="title-world" id="titleWorld">
-        <div class="title-plane">
-          <div class="title-line">
-            <span class="title-main">HELLO, I'M</span>
-            <span class="title-name">Hao</span>
+  <main class="section-shell">
+    <section class="hero" id="hero">
+      <div class="stage" id="stage">
+        <div class="blob-shadow"></div>
+
+        <div class="title-world" id="titleWorld">
+          <div class="title-plane">
+            <div class="title-line">
+              <span class="title-main">HELLO, I'M</span>
+              <span class="title-name">Jinhao</span>
+            </div>
+            <div class="meta">Senior Project Implementation Engineer / Technical Lead / 30 Years Old / 5 Years Experience</div>
           </div>
-          <div class="meta">AI Agent Engineer / 30岁 / 上海闵行</div>
+        </div>
+
+        <div class="overlay" aria-hidden="true">
+          <div class="overlay-inner">
+            <div class="title-world">
+              <div class="overlay-plane">
+                <div class="overlay-line">
+                  <span class="overlay-main">你好，我是</span>
+                  <span class="overlay-name">曹晋昊</span>
+                </div>
+                <div class="meta">PMS / 私有云部署 / 项目交付 / 系统集成</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hint">Move the pointer and watch the title keep tracking it</div>
+      </div>
+    </section>
+
+    <section class="section" id="skills">
+      <div class="section-head">
+        <div class="section-title-wrap">
+          <h2 class="section-title">专业技能</h2>
+        </div>
+        <div class="section-desc">
+          5 年实施与交付相关经验，长期负责复杂系统的本地化部署、私有云实施、第三方接口对接、项目推进与售后支持。既能做系统落地，也能做现场硬件集成和跨团队协作。
         </div>
       </div>
 
-      <div class="overlay" aria-hidden="true">
-        <div class="overlay-inner">
-          <div class="title-world">
-            <div class="overlay-plane">
-              <div class="overlay-line">
-                <span class="overlay-main">你好，我是</span>
-                <span class="overlay-name">曹晋昊</span>
+      <div class="cards-grid skills">
+        <div class="tilt-card tall" data-flip="true">
+          <div class="card-core">
+            <article class="card-face front">
+              <div class="card-top">
+                <span class="pill">PMS</span>
+                <span class="hint-mini">Hover + Click</span>
               </div>
-              <div class="meta">业务流程 / 系统实施 / 项目推进</div>
+              <h3 class="card-title">酒店系统与复杂实施交付</h3>
+              <p class="card-desc">熟悉酒店 PMS、第三方支付、公安对接、门锁、网关、梯控与自助机的部署实施，能够从前期调研、网络环境分析到安装落地、调试验收完成整套交付。</p>
+              <div class="metrics">
+                <div class="metric"><strong class="counter" data-target="784" data-suffix="">1</strong><span>上线自助机</span></div>
+                <div class="metric"><strong class="counter" data-target="300" data-suffix="+">1</strong><span>上线酒店</span></div>
+                <div class="metric"><strong class="counter" data-target="20" data-suffix="+">1</strong><span>对接门锁种类</span></div>
+              </div>
+            </article>
+            <article class="card-face back">
+              <div class="card-top">
+                <span class="pill">DETAIL</span>
+                <span class="hint-mini">Click again</span>
+              </div>
+              <h3 class="card-title">实施能力拆分</h3>
+              <div class="list">
+                <div class="list-item"><span>PMS / 第三方 PMS</span><strong>部署 / 监控 / 优化</strong></div>
+                <div class="list-item"><span>支付与平台</span><strong>微信 / 支付宝 / 第三方 API</strong></div>
+                <div class="list-item"><span>硬件集成</span><strong>门锁 / 网关 / 梯控 / 自助机</strong></div>
+                <div class="list-item"><span>项目执行</span><strong>测试 / bug 跟踪 / 培训 / 售后</strong></div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="tilt-card short" data-flip="true">
+            <div class="card-core">
+              <article class="card-face front">
+                <div class="card-top">
+                  <span class="pill">DEV</span>
+                  <span class="hint-mini">Hover + Click</span>
+                </div>
+                <h3 class="card-title">后端与实施技术基础</h3>
+                <p class="card-desc">具备 Java、SpringBoot、J2EE、MySQL、HTML、CSS、Vue.js、Element UI 等技术基础，能理解系统架构、接口协同和前后端联动实现。</p>
+              </article>
+              <article class="card-face back">
+                <div class="card-top">
+                  <span class="pill">STACK</span>
+                  <span class="hint-mini">Back Face</span>
+                </div>
+                <div class="list">
+                  <div class="list-item"><span>后端</span><strong>Java / SpringBoot</strong></div>
+                  <div class="list-item"><span>前端</span><strong>HTML / CSS / Vue / Element</strong></div>
+                  <div class="list-item"><span>数据库</span><strong>MySQL 安装 / 备份 / 恢复 / 基础优化</strong></div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="tilt-card medium" data-flip="true">
+            <div class="card-core">
+              <article class="card-face front">
+                <div class="card-top">
+                  <span class="pill">PM</span>
+                  <span class="hint-mini">3D Interaction</span>
+                </div>
+                <h3 class="card-title">项目管理与跨团队协作</h3>
+                <p class="card-desc">熟悉项目全生命周期管理，能参与规划、实施、测试、交付与售后，擅长客户沟通、需求挖掘、风险评估、文档整理和多项目并行推进。</p>
+                <div class="project-badge">
+                  <span>需求沟通</span>
+                  <span>生命周期管理</span>
+                  <span>培训交付</span>
+                </div>
+              </article>
+              <article class="card-face back">
+                <div class="card-top">
+                  <span class="pill">STYLE</span>
+                  <span class="hint-mini">Micro Motion</span>
+                </div>
+                <p class="card-desc">可使用 ER 图、流程图、模型图等方式辅助方案表达与项目规划，具备跨区域协调、客户培训和技术支持经验。</p>
+              </article>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="hint">Move the pointer and watch the title keep tracking it</div>
-    </div>
-  </section>
+      <div class="section-footnote">教育背景：太原理工大学（211）软件工程本科，2017-07 至 2021-06。</div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="section-head">
+        <div class="section-title-wrap">
+          <h2 class="section-title">项目经历</h2>
+        </div>
+        <div class="section-desc">
+          以下是我的三类核心项目经历：大型酒店与集团本地化部署、电子签与私有云项目，以及教学管理系统与小程序开发实施。后续我也会继续补充更详细的成果说明。
+        </div>
+      </div>
+
+      <div class="cards-grid projects">
+        <div class="tilt-card medium" data-flip="true">
+          <div class="card-core">
+            <article class="card-face front">
+              <div class="card-top">
+                <span class="pill">01</span>
+                <span class="hint-mini">Project Card</span>
+              </div>
+              <h3 class="card-title">酒店 PMS 本地化部署</h3>
+              <p class="card-desc">在云闪住上海有限科技公司任高级项目实施工程师 / 技术负责人，负责颐路 PMS 及第三方 PMS 的部署、监控与优化，并参与锦江、尚美、维也纳、乌镇、古北水镇等项目的本地化或私有云部署。</p>
+              <div class="project-badge">
+                <span>PMS</span>
+                <span>私有云</span>
+                <span>集团项目</span>
+              </div>
+            </article>
+            <article class="card-face back">
+              <div class="card-top">
+                <span class="pill">RESULT</span>
+                <span class="hint-mini">Back Face</span>
+              </div>
+              <p class="card-desc">任职期间累计上线自助机 784 台、上线酒店 300 余家、对接公安厂家 50 余种、对接门锁 20 余种，并负责功能测试、性能测试、稳定性测试及 bug 周期跟踪。</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="tilt-card medium" data-flip="true">
+          <div class="card-core">
+            <article class="card-face front">
+              <div class="card-top">
+                <span class="pill">02</span>
+                <span class="hint-mini">Project Card</span>
+              </div>
+              <h3 class="card-title">电子签 / 远付通 / 区块链项目</h3>
+              <p class="card-desc">在掌缘科技上海有限公司负责商家定制化需求沟通与实施、电子合同系统私有云定制部署，以及区块链开发部署相关项目，参与需求分析、解决方案设计和关键文档编写。</p>
+              <div class="project-badge">
+                <span>电子签</span>
+                <span>私有云</span>
+                <span>区块链</span>
+              </div>
+            </article>
+            <article class="card-face back">
+              <div class="card-top">
+                <span class="pill">DETAIL</span>
+                <span class="hint-mini">Back Face</span>
+              </div>
+              <p class="card-desc">我负责过云服务器安装、新建通道数据采集、风险评估、生命周期管理、ER 图 / 流程图 / 模型图制作，并参与测试文档编写与产品稳定性保障。</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="tilt-card medium" data-flip="true">
+          <div class="card-core">
+            <article class="card-face front">
+              <div class="card-top">
+                <span class="pill">03</span>
+                <span class="hint-mini">Project Card</span>
+              </div>
+              <h3 class="card-title">教学管理系统与微信小程序</h3>
+              <p class="card-desc">在四川华迪信息技术有限公司担任全栈软件工程师 + 项目实施，参与教学管理信息系统开发与实施，并独立完成公司内部笔记流水账微信小程序的注册、审核、开发与维护。</p>
+              <div class="project-badge">
+                <span>SpringBoot</span>
+                <span>Vue + Element</span>
+                <span>小程序</span>
+              </div>
+            </article>
+            <article class="card-face back">
+              <div class="card-top">
+                <span class="pill">DETAIL</span>
+                <span class="hint-mini">Back Face</span>
+              </div>
+              <p class="card-desc">该阶段覆盖后端管理端、前端双端互通、成绩流转、试卷存储、功能扩展、系统测试与性能优化，也体现了我从开发到实施的复合能力。</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="section-head">
+        <div class="section-title-wrap">
+          <h2 class="section-title">合作联系</h2>
+        </div>
+        <div class="section-desc">
+          这里整理了我的电话、邮箱与基本信息，并以更适合网站展示的方式进行呈现。
+        </div>
+      </div>
+
+      <div class="cards-grid contact">
+        <div class="tilt-card medium" data-flip="true">
+          <div class="card-core">
+            <article class="card-face front">
+              <div class="card-top">
+                <span class="pill">CO</span>
+                <span class="hint-mini">Contact Panel</span>
+              </div>
+              <h3 class="card-title">欢迎交流</h3>
+              <p class="card-desc">目前可承接系统实施、项目交付、部署调试、技术支持、培训协同等相关沟通，也适合用于正式求职与项目机会对接。</p>
+              <div class="contact-list">
+                <div class="contact-item">
+                  <small>Email</small>
+                  <strong>937843309@qq.com</strong>
+                </div>
+                <div class="contact-item">
+                  <small>Phone</small>
+                  <strong>15534448358</strong>
+                </div>
+              </div>
+            </article>
+            <article class="card-face back">
+              <div class="card-top">
+                <span class="pill">INFO</span>
+                <span class="hint-mini">Back Face</span>
+              </div>
+              <p class="card-desc">这里也可以继续补充响应时间、合作方向，或者一句更有个人品牌感的说明。</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="tilt-card info-card" data-flip="true">
+          <div class="card-core">
+            <article class="card-face front">
+              <div class="card-top">
+                <span class="pill">CV</span>
+                <span class="hint-mini">Profile</span>
+              </div>
+              <h3 class="card-title">个人信息</h3>
+              <div class="info-grid">
+                <div class="info-box">
+                  <small>籍贯</small>
+                  <strong>山西临汾</strong>
+                </div>
+                <div class="info-box">
+                  <small>Experience</small>
+                  <strong>5 Years Experience</strong>
+                </div>
+                <div class="info-box">
+                  <small>学历</small>
+                  <strong>本科 / 软件工程</strong>
+                </div>
+                <div class="info-box">
+                  <small>方向</small>
+                  <strong>项目实施 / 技术支持</strong>
+                </div>
+              </div>
+            </article>
+            <article class="card-face back">
+              <div class="card-top">
+                <span class="pill">MORE</span>
+                <span class="hint-mini">Back Face</span>
+              </div>
+              <p class="card-desc">个人特质方面，我比较强调主动性、表达能力、细节敏感度、计划与时间管理能力，以及在压力下保持交付节奏的能力。这些内容也很适合在面试或合作沟通中进一步展开。</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <script>
     (() => {
@@ -484,6 +1189,89 @@
       refreshRects();
       reset();
       loop();
+
+      const counters = document.querySelectorAll('.counter');
+      let countersPlayed = false;
+
+      function animateCounter(el) {
+        const target = Number(el.dataset.target || 0);
+        const suffix = el.dataset.suffix || '';
+        const duration = 1600;
+        const start = performance.now();
+
+        function tick(now) {
+          const p = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - p, 3);
+          const value = Math.max(1, Math.round(1 + (target - 1) * eased));
+          el.textContent = `${value}${suffix}`;
+          if (p < 1) requestAnimationFrame(tick);
+        }
+
+        requestAnimationFrame(tick);
+      }
+
+      const metricsBlock = document.querySelector('.metrics');
+      if (metricsBlock && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !countersPlayed) {
+              countersPlayed = true;
+              counters.forEach(animateCounter);
+              io.disconnect();
+            }
+          });
+        }, { threshold: 0.35 });
+        io.observe(metricsBlock);
+      } else {
+        counters.forEach(animateCounter);
+      }
+
+      const cards = document.querySelectorAll('.tilt-card');
+      cards.forEach((card) => {
+        const core = card.querySelector('.card-core');
+        const faces = card.querySelectorAll('.card-face');
+
+        function resetCard() {
+          card.style.transform = 'translate3d(0,0,0)';
+          faces.forEach((face) => {
+            face.style.setProperty('--gx', '50%');
+            face.style.setProperty('--gy', '50%');
+            face.style.setProperty('--glare', '0');
+          });
+          if (!card.classList.contains('is-flipped')) {
+            core.style.transform = 'rotateY(0deg)';
+          }
+        }
+
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const px = (e.clientX - rect.left) / rect.width;
+          const py = (e.clientY - rect.top) / rect.height;
+          const ry = (px - 0.5) * 12;
+          const rx = (0.5 - py) * 12;
+          const baseFlip = card.classList.contains('is-flipped') ? 180 : 0;
+          core.style.transform = `rotateX(${rx}deg) rotateY(${baseFlip + ry}deg) translateY(-4px)`;
+          faces.forEach((face) => {
+            face.style.setProperty('--gx', `${px * 100}%`);
+            face.style.setProperty('--gy', `${py * 100}%`);
+            face.style.setProperty('--glare', '0.9');
+          });
+        });
+
+        card.addEventListener('mouseleave', () => {
+          resetCard();
+        });
+
+        card.addEventListener('click', () => {
+          if (card.dataset.flip === 'true') {
+            card.classList.toggle('is-flipped');
+            const baseFlip = card.classList.contains('is-flipped') ? 180 : 0;
+            core.style.transform = `rotateX(0deg) rotateY(${baseFlip}deg)`;
+          }
+        });
+
+        resetCard();
+      });
     })();
   </script>
 </body>
